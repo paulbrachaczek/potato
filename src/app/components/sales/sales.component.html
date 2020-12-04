@@ -1,0 +1,41 @@
+<div class="card mt-8">
+  <h4 class="card-header">This is our sales in this year</h4>
+  <div class="card-body">
+      <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+
+      <p-table [value]="sales" #saletable [globalFilterFields]="['productName','productID','total']">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex">
+            <div class="form-group">
+                <label for="username">Search product:</label>
+                <input type="text" class="form-control" pInputText type="text" (input)="saletable.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"/>
+            </div>
+          </div>
+      </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+              <th *ngFor="let col of column" pSortableColumn={{col.field}} [attr.colspan]="col.subHeaders ? 4 : 1" [attr.rowspan]="!col.subHeaders ? 2 : 1">
+                {{col.header}} <p-sortIcon *ngIf="!col.subHeaders" field={{col.field}}></p-sortIcon>
+              </th>
+            </tr>
+            <tr>
+              <th *ngFor="let col of subHeaders" pSortableColumn={{col.field}}>
+                {{col.header}} <p-sortIcon field={{col.field}}></p-sortIcon>
+              </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-sale>
+            <tr>
+              <td>{{sale.productID}}</td>
+              <td>{{sale.productName}}</td>
+              <td>{{sale.salesQ1}}</td>
+              <td>{{sale.salesQ2}}</td>
+              <td>{{sale.salesQ3}}</td>
+              <td>{{sale.salesQ4}}</td>
+              <td>{{sale.total}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+  </div>
+</div>

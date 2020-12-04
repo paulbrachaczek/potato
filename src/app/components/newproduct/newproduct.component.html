@@ -1,0 +1,37 @@
+<p>Add new product</p>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+      <label for="name">Product name</label>
+      <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+      <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+          <div *ngIf="f.name.errors.required">Username is required</div>
+      </div>
+  </div>
+  <div class="form-group">
+      <label for="id">Product ID</label>
+      <input type="text" formControlName="id" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.id.errors }" />
+      <div *ngIf="submitted && f.id.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required">Id is required</div>
+      </div>
+  </div>
+  <div class="form-group">
+    <label for="manager">Manager</label>
+    <input type="text" formControlName="manager" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.manager.errors }" />
+    <div *ngIf="submitted && f.manager.errors" class="invalid-feedback">
+        <div *ngIf="f.manager.errors">Name is too long</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="id">Sales start date</label>
+    <input type="date" formControlName="id" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.date.errors }" />
+    <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+        <div *ngIf="f.date.errors.required">Password is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+      <button [disabled]="loading" class="btn btn-primary">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Add product
+      </button>
+  </div>
+</form>
