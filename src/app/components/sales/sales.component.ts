@@ -5,11 +5,11 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sales',
-  templateUrl: './sales.component.html',
-  styleUrls: ['./sales.component.scss']
+  templateUrl: './sales.component.html'
 })
 export class SalesComponent implements OnInit {
   subscription$: Subscription;
+  subscription2$: Subscription;
   loading = true;
   sales = [];
   column: ColumnEntity[];
@@ -23,14 +23,14 @@ export class SalesComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.salesService.getSales();
+    //this.salesService.getSales();
     this.subscription$ = this.salesService.columnNodes.subscribe((column) => {
       this.column = column;
       if(column) {
         this.subHeaders = column[2].subHeaders;
       }
     });
-    this.salesService.salesData.subscribe((sales) => {
+    this.subscription2$ = this.salesService.salesData.subscribe((sales) => {
       //this.sales = sales;
       if(sales) {
         this.calculateTotal(sales);
@@ -39,7 +39,9 @@ export class SalesComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    console.log('distroy')
     this.subscription$.unsubscribe();
+    this.subscription2$.unsubscribe();
   }
 
   calculateTotal(_sales) {

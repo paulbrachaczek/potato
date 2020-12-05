@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SalesService } from '../../services/sales.service';
 
 @Component({
   selector: 'app-newproduct',
@@ -11,28 +12,31 @@ export class NewproductComponent implements OnInit {
   submitted = false;
   productForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private salesService: SalesService
+  ) { }
 
   ngOnInit(): void {
     this.productForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      id: ['', Validators.required],
-      manager: ['', Validators.required],
+      productName: ['', [Validators.required, Validators.maxLength(50)]],
+      productID: ['', [Validators.required, Validators.maxLength(13), Validators.minLength(13), Validators.pattern(/^-?(|[1-9]{13}\d*)?$/)]],
+      manager: ['', Validators.maxLength(30)],
       date: ['', Validators.required]
-  });
-
+    });
   }
 
   get f() { return this.productForm.controls; }
 
-  onSubmit() {
+  onSubmit(productData): void {
     this.submitted = true;
 
-    // stop here if form is invalid
     if (this.productForm.invalid) {
         return;
     }
     this.loading = true;
+    this.productForm.reset();
+    this.salesService.addProduct(productData);
   }
 
 }

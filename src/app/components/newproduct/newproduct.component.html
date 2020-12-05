@@ -1,37 +1,42 @@
 <p>Add new product</p>
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)">
   <div class="form-group">
-      <label for="name">Product name</label>
-      <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
-      <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-          <div *ngIf="f.name.errors.required">Username is required</div>
+      <label for="productName">Product name</label>
+      <input type="text" formControlName="productName" maxlength="50" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productName.errors }" />
+      <div *ngIf="submitted && f.productName.errors" class="invalid-feedback">
+          <div *ngIf="f.productName.errors.required">Product name is required</div>
+          <div *ngIf="f.productName.errors.maxlength">Product is to long, maximum length up to 50 characters</div>
       </div>
   </div>
   <div class="form-group">
-      <label for="id">Product ID</label>
-      <input type="text" formControlName="id" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.id.errors }" />
-      <div *ngIf="submitted && f.id.errors" class="invalid-feedback">
-          <div *ngIf="f.password.errors.required">Id is required</div>
+      <label for="productID">Product ID</label>
+      <input maxlength="13" minlength="10" type="text" formControlName="productID" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productID.errors }" />
+      <div *ngIf="submitted && f.productID.errors" class="invalid-feedback">
+          <div *ngIf="f.productID.errors.required">Id is required</div>
+          <div *ngIf="f.productID.errors.minlength">Please enter 13 digits</div>
+          <div *ngIf="f.productID.errors.maxlength">Name is to long, maximum length up to 13 digits</div>
+          <div *ngIf="f.productID.errors.pattern">Only digits please</div>
       </div>
   </div>
   <div class="form-group">
     <label for="manager">Manager</label>
-    <input type="text" formControlName="manager" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.manager.errors }" />
+    <input type="text" maxlength="30" formControlName="manager" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.manager.errors }" />
     <div *ngIf="submitted && f.manager.errors" class="invalid-feedback">
-        <div *ngIf="f.manager.errors">Name is too long</div>
+        <div *ngIf="f.manager.errors.maxlength">Manager is to long, maximum length up to 30 characters</div>
     </div>
   </div>
   <div class="form-group">
-    <label for="id">Sales start date</label>
-    <input type="date" formControlName="id" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.date.errors }" />
+    <label for="date">Sales start date</label>
+    <input type="date" formControlName="date" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.date.errors }" />
     <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
-        <div *ngIf="f.date.errors.required">Password is required</div>
+        <div *ngIf="f.date.errors.required">Date is required</div>
     </div>
   </div>
-  <div class="form-group">
-      <button [disabled]="loading" class="btn btn-primary">
+  <div class="form-group" style="display: flex;">
+      <button type="submit" [disabled]="loading" class="btn btn-primary">
           <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
           Add product
       </button>
+      <button (click)="productForm.reset()" class="btn btn-secondary ml-auto">Clear form</button>
   </div>
 </form>

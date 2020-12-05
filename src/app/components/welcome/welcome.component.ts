@@ -8,8 +8,7 @@ import { DataEntity, ColumnEntity } from '../../models/sales';
 
 @Component({
   selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  templateUrl: './welcome.component.html'
 })
 export class WelcomeComponent implements OnInit {
   loading = false;
@@ -24,34 +23,6 @@ export class WelcomeComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    // this.loading = true;
-    // this.userService.getAll().pipe(first()).subscribe(users => {
-    //       this.loading = false;
-    //       this.users = users;
-    // });
     this.salesService.getSales();
-    this.salesService.columnNodes.subscribe((column) => {
-      this.column = column;
-    });
-    this.salesService.salesData.subscribe((sales) => {
-      this.sales = sales;
-      if(this.sales) {
-        this.total = this.calculateTotal(this.sales);
-        console.log(this.total);
-      }
-    });
-  }
-
-  calculateTotal(_sales): number[] {
-    const sales = _sales;
-    let total = [];
-
-    total.push(
-      sales.map(sale => Object.values(sale)
-      .filter(value => typeof(value) === 'number')
-      .reduce((acc: number, value: number) => acc + value))
-    );
-
-    return total.flat();
   }
 }
