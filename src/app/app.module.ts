@@ -14,7 +14,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { SalesComponent } from './components/sales/sales.component';
 import { NewproductComponent } from './components/newproduct/newproduct.component';
 import { SalesPipe } from './pipes/sales.pipe';
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
