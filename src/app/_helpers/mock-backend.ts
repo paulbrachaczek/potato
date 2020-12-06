@@ -22,13 +22,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 case url.endsWith('/users/authenticate') && method === 'POST':
                     return authenticate();
                 default:
-                    // pass through any requests not handled above
                     return next.handle(request);
             }
         }
-
-        // route functions
-
         function authenticate() {
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
@@ -39,8 +35,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 token: 'fake-jwt-token'
             })
         }
-
-        // helper functions
 
         function ok(body?) {
             return of(new HttpResponse({ status: 200, body }))
@@ -53,7 +47,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 }
 
 export const fakeBackendProvider = {
-    // use fake backend in place of Http service for backend-less development
     provide: HTTP_INTERCEPTORS,
     useClass: FakeBackendInterceptor,
     multi: true
